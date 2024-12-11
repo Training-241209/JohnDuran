@@ -1,0 +1,15 @@
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\bin\Debug\net8.0\gpaCalculator.exe
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\bin\Debug\net8.0\gpaCalculator.deps.json
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\bin\Debug\net8.0\gpaCalculator.runtimeconfig.json
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\bin\Debug\net8.0\gpaCalculator.dll
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\bin\Debug\net8.0\gpaCalculator.pdb
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\obj\Debug\net8.0\gpaCalculator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\obj\Debug\net8.0\gpaCalculator.AssemblyInfoInputs.cache
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\obj\Debug\net8.0\gpaCalculator.AssemblyInfo.cs
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\obj\Debug\net8.0\gpaCalculator.csproj.CoreCompileInputs.cache
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\obj\Debug\net8.0\gpaCalculator.sourcelink.json
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\obj\Debug\net8.0\gpaCalculator.dll
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\obj\Debug\net8.0\refint\gpaCalculator.dll
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\obj\Debug\net8.0\gpaCalculator.pdb
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\obj\Debug\net8.0\gpaCalculator.genruntimeconfig.cache
+C:\Revature\Training\repos\JohnDuran\GPA_APP\gpaCalculator\obj\Debug\net8.0\ref\gpaCalculator.dll
