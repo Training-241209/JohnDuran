@@ -1,0 +1,88 @@
+# Archivos temporales del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos generados por editores y herramientas comunes
+*.log
+*.tmp
+*.swp
+*.bak
+
+# Archivos de configuración personal
+.env
+.vscode/
+.idea/
+*.iml
+
+# Dependencias y artefactos compilados
+node_modules/
+dist/
+build/
+out/
+*.class
+*.pyc
+*.o
+*.exe
+*.dll
+*.so
+
+# Archivos de paquetes
+*.zip
+*.tar.gz
+*.rar
+
+# Módulos y dependencias
+node_modules/
+
+# Builds
+dist/
+build/
+
+# Archivos de configuración local
+.env
+.npmrc
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos generados por Maven o Gradle
+target/
+*.war
+*.jar
+
+# Configuración IDE
+*.iml
+.idea/
+.vscode/
+
+# Logs y archivos temporales
+*.log
+
+# Node.js
+node_modules/
+
+# Builds
+dist/
+build/
+
+# Configuración local
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+
+# Archivos compilados
+bin/
+obj/
+
+# Archivos de usuario de Visual Studio
+*.user
+*.suo
+
+# Archivos de configuración local
+.env
+.vscode/
+
