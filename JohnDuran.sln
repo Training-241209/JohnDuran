@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "week1", "week1", "{1E3FD848-B525-420F-A232-7ED0CFDB43CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFirstConsoleGame", "week1\MyFirstConsoleGame\MyFirstConsoleGame.csproj", "{03EF979D-DCD2-431D-8173-CB85D17597D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GPA_APP", "GPA_APP", "{8F141F31-9C5E-46B7-BBAA-4DEA413CBC56}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpaCalculator", "week1\GPA_APP\gpaCalculator\gpaCalculator.csproj", "{EA5C6878-CB65-41E5-8DE0-D985828E6371}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03EF979D-DCD2-431D-8173-CB85D17597D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03EF979D-DCD2-431D-8173-CB85D17597D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03EF979D-DCD2-431D-8173-CB85D17597D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03EF979D-DCD2-431D-8173-CB85D17597D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA5C6878-CB65-41E5-8DE0-D985828E6371}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA5C6878-CB65-41E5-8DE0-D985828E6371}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA5C6878-CB65-41E5-8DE0-D985828E6371}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA5C6878-CB65-41E5-8DE0-D985828E6371}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{03EF979D-DCD2-431D-8173-CB85D17597D7} = {1E3FD848-B525-420F-A232-7ED0CFDB43CB}
+		{8F141F31-9C5E-46B7-BBAA-4DEA413CBC56} = {1E3FD848-B525-420F-A232-7ED0CFDB43CB}
+		{EA5C6878-CB65-41E5-8DE0-D985828E6371} = {8F141F31-9C5E-46B7-BBAA-4DEA413CBC56}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACA7DD55-4130-4526-B3F6-8CA147B689AF}
+	EndGlobalSection
+EndGlobal
