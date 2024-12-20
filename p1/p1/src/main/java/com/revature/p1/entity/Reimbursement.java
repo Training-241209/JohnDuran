@@ -1,6 +1,8 @@
 package com.revature.p1.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,9 +22,12 @@ public class Reimbursement {
    
     private double amount;
 
-    private int status;
+    @Enumerated(EnumType.STRING)
+    private ReimbursementStatus status = ReimbursementStatus.PENDING;
 
     @ManyToOne
     @JoinColumn(name = "user_Id")
     private User user;
 }
+
+

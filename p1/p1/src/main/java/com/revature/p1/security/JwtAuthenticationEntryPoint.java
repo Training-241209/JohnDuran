@@ -1,4 +1,4 @@
-package com.revature.p1.config;
+package com.revature.p1.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

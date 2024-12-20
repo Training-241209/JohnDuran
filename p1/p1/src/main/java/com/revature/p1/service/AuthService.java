@@ -7,8 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.revature.p1.config.JwtTokenProvider;
-import com.revature.p1.dto.LoginRequest;
+import com.revature.p1.dto.request.LoginRequest;
+import com.revature.p1.security.JwtTokenProvider;
 
 
 @Service

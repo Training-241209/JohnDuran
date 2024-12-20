@@ -1,6 +1,7 @@
 package com.revature.p1.exception;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.revature.p1.exception.custom.*;
 
+import io.jsonwebtoken.JwtException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = InvalidUserException.class)
+    @ExceptionHandler(value = {InvalidUserException.class, NoSuchElementException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public @ResponseBody  ErrorResponse handleBadRequest(Exception ex) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
@@ -25,6 +28,12 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public @ResponseBody  ErrorResponse handleConflict(Exception ex) {
         return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(value = JwtException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public @ResponseBody  ErrorResponse handleUnauthorized(Exception ex) {
+        return new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
     }
 
 

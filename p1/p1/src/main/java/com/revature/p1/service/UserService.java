@@ -4,11 +4,10 @@ package com.revature.p1.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.revature.p1.dto.SignUpRequest;
+import com.revature.p1.dto.request.SignUpRequest;
 import com.revature.p1.entity.Role;
 import com.revature.p1.entity.User;
 import com.revature.p1.exception.custom.InvalidUserException;
-import com.revature.p1.exception.custom.UnauthorizedException;
 import com.revature.p1.exception.custom.UserAlreadyExistsException;
 import com.revature.p1.repository.RoleRepository;
 import com.revature.p1.repository.UserRepository;
@@ -16,17 +15,16 @@ import com.revature.p1.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
@@ -36,11 +34,7 @@ public class UserService  implements UserDetailsService {
     UserRepository userRepository;
     RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
-    
-
-   
-
-    
+    private final String DefaultUserRole= "USER";
     
     @Transactional
     public User registerUser(SignUpRequest request)throws UserAlreadyExistsException, InvalidUserException {
@@ -49,13 +43,13 @@ public class UserService  implements UserDetailsService {
             throw new UserAlreadyExistsException(request.getUsername());
         }
         User user = request.convertToUserEntity();
-        Optional<Role> roleOptional = roleRepository.findByName("USER");
+        Optional<Role> roleOptional = roleRepository.findByName(DefaultUserRole);
         Role role;
         if(roleOptional.isPresent()){
             role= roleOptional.get();
         }else{
             Role newRole = new Role();
-            newRole.setName("USER");
+            newRole.setName(DefaultUserRole);
             role= roleRepository.save(newRole); 
         }
         Set<Role> roles = new HashSet<>();
@@ -65,27 +59,13 @@ public class UserService  implements UserDetailsService {
         return userRepository.save(user);        
     }
 
-    public String Login(String username, String password)throws UnauthorizedException{        
-        if (userRepository.existsByUsernameAndPassword(username,passwordEncoder.encode(password))) {
-            return "Successfully logged";
-        }
-        throw new UnauthorizedException("Failed login");       
+    public User findbyUserName(String username)throws NoSuchElementException{
+       Optional<User> optUser =userRepository.findUserByUsername(username);
+       if (optUser.isPresent()) {
+            return optUser.get();
+       }
+       throw new NoSuchElementException("User with id:"+username+" doesn't exists.");
     }
-
-   
-    // private void addRoleToUser(Long userId, String roleName) {
-    //     Optional<User> userOptional = userRepository.findById(userId);
-    //     Optional<Role> roleOptional = roleRepository.findByName(roleName);
-    //     if (userOptional.isPresent() && roleOptional.isPresent()) {
-    //         User user = userOptional.get();
-    //         Role role = roleOptional.get();
-
-    //         user.getRoles().add(role);
-    //         userRepository.save(user);
-    //     } else {
-    //         throw new RuntimeException("User or Role not found");
-    //     }
-    // }
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {

@@ -1,4 +1,4 @@
-package com.revature.p1.dto;
+package com.revature.p1.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

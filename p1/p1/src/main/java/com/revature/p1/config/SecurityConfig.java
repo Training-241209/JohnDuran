@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.revature.p1.security.JwtAuthenticationEntryPoint;
+import com.revature.p1.security.JwtAuthenticationFilter;
+
 @Configuration
 @EnableMethodSecurity
 @AllArgsConstructor
@@ -34,10 +37,11 @@ public class SecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers("/auth/**").permitAll()  // Allow signup and other auth endpoints
-                    .requestMatchers("/test2").hasAuthority("USER") 
-                    .anyRequest().authenticated()                    
-                    )  // Require authentication for all other endpoints
+                    .requestMatchers("/auth/**").permitAll() 
+                    .requestMatchers("/ticket/add").hasAuthority("USER")
+                    .requestMatchers("/ticket/approve/**").hasAuthority("ADMIN")
+                    .anyRequest().permitAll()                    
+                    )  
                 .httpBasic(Customizer.withDefaults());
 
         http.exceptionHandling( exception -> exception
