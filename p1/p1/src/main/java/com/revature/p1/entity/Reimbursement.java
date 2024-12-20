@@ -28,6 +28,8 @@ public class Reimbursement {
     @ManyToOne
     @JoinColumn(name = "user_Id")
     private User user;
+
+    private boolean deleted = false;
 }
 
 

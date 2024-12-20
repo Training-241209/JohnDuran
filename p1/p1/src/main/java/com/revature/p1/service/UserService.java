@@ -5,16 +5,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.p1.dto.request.SignUpRequest;
+import com.revature.p1.entity.Reimbursement;
 import com.revature.p1.entity.Role;
 import com.revature.p1.entity.User;
 import com.revature.p1.exception.custom.InvalidUserException;
 import com.revature.p1.exception.custom.UserAlreadyExistsException;
+import com.revature.p1.repository.ReimbursementRepository;
 import com.revature.p1.repository.RoleRepository;
 import com.revature.p1.repository.UserRepository;
-
 import lombok.AllArgsConstructor;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
@@ -34,7 +36,8 @@ public class UserService  implements UserDetailsService {
     UserRepository userRepository;
     RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
-    private final String DefaultUserRole= "USER";
+    ReimbursementRepository reimbursementRepository;
+    private final String DefaultUserRole= "EMPLOYEE";
     
     @Transactional
     public User registerUser(SignUpRequest request)throws UserAlreadyExistsException, InvalidUserException {
@@ -58,19 +61,52 @@ public class UserService  implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);        
     }
+    @Transactional
+    public boolean softDeleteUser(Long id) {
+        Optional<User> optUser = userRepository.findByIdAndDeletedFalse(id);
+        if (optUser.isPresent()) {
+            User user = optUser.get();
+            user.setDeleted(true);  
+            userRepository.save(user);
+
+            List<Reimbursement> reimbursements = reimbursementRepository.findByUser(user);
+            for (Reimbursement reimbursement : reimbursements) {
+                reimbursement.setDeleted(true);; 
+            }
+            reimbursementRepository.saveAll(reimbursements); 
+            return true;  
+        } else {
+            return false;
+        }
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.findByDeletedFalse();
+    }
+
+    public List<String> getRolesNamesByUsername(String username){
+        Optional<User> optUser =userRepository.findUserByUsernameAndDeletedFalse(username);
+        User user;
+        if (optUser.isPresent()) {
+             user = optUser.get();
+        }else{
+            throw new NoSuchElementException("User with username:\""+username+"\" doesn't exists.");
+        }
+        return user.getRoles().stream().map((role) -> role.getName()).collect(Collectors.toList());
+    }
 
     public User findbyUserName(String username)throws NoSuchElementException{
-       Optional<User> optUser =userRepository.findUserByUsername(username);
+       Optional<User> optUser =userRepository.findUserByUsernameAndDeletedFalse(username);
        if (optUser.isPresent()) {
             return optUser.get();
        }
-       throw new NoSuchElementException("User with id:"+username+" doesn't exists.");
+       throw new NoSuchElementException("User with username:\""+username+"\" doesn't exists.");
     }
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
 
-        User user = userRepository.findUserByUsername(usernameOrEmail)
+        User user = userRepository.findUserByUsernameAndDeletedFalse(usernameOrEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User not exists by Username or Email"));
 
         Set<GrantedAuthority> authorities = user.getRoles().stream()

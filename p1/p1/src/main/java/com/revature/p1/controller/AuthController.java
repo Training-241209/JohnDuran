@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.p1.dto.request.LoginRequest;
 import com.revature.p1.dto.request.SignUpRequest;
 import com.revature.p1.dto.response.JwtAuthResponse;
-import com.revature.p1.dto.response.SignUpResponse;
+import com.revature.p1.dto.response.UserDto;
 import com.revature.p1.service.AuthService;
 import com.revature.p1.service.UserService;
 
@@ -24,9 +24,9 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping(value = "/signup")
-    public ResponseEntity<SignUpResponse> signUp(@Valid @RequestBody SignUpRequest user)  throws Exception{
+    public ResponseEntity<UserDto> signUp(@Valid @RequestBody SignUpRequest user)  throws Exception{
          
-        return ResponseEntity.ok(new SignUpResponse(userService.registerUser(user)));       
+        return ResponseEntity.ok(new UserDto(userService.registerUser(user)));       
     }
 
     @PostMapping(value = "/login")

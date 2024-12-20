@@ -5,7 +5,7 @@ import com.revature.p1.entity.User;
 import lombok.Data;
 
 @Data
-public class SignUpResponse {
+public class UserDto {
     private long id;
 
     private String firstName;
@@ -14,7 +14,7 @@ public class SignUpResponse {
     
     private String username;    
 
-    public SignUpResponse(User user){
+    public UserDto(User user){
         id= user.getId();
         firstName = user.getFirstName();
         lastName = user.getLastName();

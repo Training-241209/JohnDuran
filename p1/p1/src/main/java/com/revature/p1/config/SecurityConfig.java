@@ -37,10 +37,11 @@ public class SecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers("/auth/**").permitAll() 
-                    .requestMatchers("/ticket/add").hasAuthority("USER")
-                    .requestMatchers("/ticket/approve/**").hasAuthority("ADMIN")
-                    .anyRequest().permitAll()                    
+                    .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/ticket").hasAuthority("EMPLOYEE")  
+                    .requestMatchers("/ticket/**").hasAuthority("MANAGER") 
+                    .requestMatchers("/user/**").hasAuthority("MANAGER")                 
+                    .anyRequest().authenticated()                    
                     )  
                 .httpBasic(Customizer.withDefaults());
 
