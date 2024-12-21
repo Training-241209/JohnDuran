@@ -1,6 +1,7 @@
 package com.revature.p1.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,4 +16,5 @@ public interface ReimbursementRepository extends JpaRepository<Reimbursement,Lon
     List<Reimbursement> findByUserAndDeletedFalse(User user);
     List<Reimbursement> findByUser(User user);
     List<Reimbursement> findByDeletedFalse();
+    Optional<Reimbursement> findByIdAndDeletedFalse(long id);
 }

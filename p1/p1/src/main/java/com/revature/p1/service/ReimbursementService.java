@@ -10,6 +10,7 @@ import com.revature.p1.dto.request.TicketRequest;
 import com.revature.p1.entity.Reimbursement;
 import com.revature.p1.entity.ReimbursementStatus;
 import com.revature.p1.entity.User;
+import com.revature.p1.exception.custom.ForbiddenException;
 import com.revature.p1.repository.ReimbursementRepository;
 import com.revature.p1.repository.UserRepository;
 
@@ -32,7 +33,7 @@ public class ReimbursementService {
     }
     
 
-    public Reimbursement updateStatusReimbursement(long ticketId, ReimbursementStatus status){
+    public Reimbursement updateReimbursementStatus(long ticketId, ReimbursementStatus status){
         Optional<Reimbursement> optR= reimbursementRepository.findById(ticketId);
         if (optR.isPresent()) {
             Reimbursement r = optR.get();
@@ -40,6 +41,41 @@ public class ReimbursementService {
             return reimbursementRepository.save(r);
         }
         throw new NoSuchElementException("There is no reimbursement ticket with id:"+ticketId);
+    }
+
+    public Reimbursement updateReimbursementDescription(long ticketId, String description){
+        Optional<Reimbursement> optR= reimbursementRepository.findById(ticketId);
+        if (optR.isPresent()) {
+            Reimbursement r = optR.get();
+            r.setDescription(description);;
+            return reimbursementRepository.save(r);
+        }
+        throw new NoSuchElementException("There is no reimbursement ticket with id:"+ticketId);
+    }
+
+    public void isUserAuthorizedtoUpdateTicket(String username, long ticketId){        
+        Optional<Reimbursement> optR= reimbursementRepository.findById(ticketId);
+        if (optR.isPresent()) {
+            Reimbursement r = optR.get();
+            if (!r.getUser().getUsername().equals(username)) {
+                throw new ForbiddenException("Since you are not the author, you are not authorized to update the ticket with id:"+ticketId);
+            }else if(!r.getStatus().equals(ReimbursementStatus.PENDING)){
+                throw new ForbiddenException("Tickets can't be updated after approval");
+            }
+        }else{
+            throw new NoSuchElementException("There is no reimbursement ticket with id:"+ticketId);
+        }
+    }
+
+    public boolean softDeleteReimbursement(long ticketId){
+        Optional<Reimbursement> optR= reimbursementRepository.findByIdAndDeletedFalse(ticketId);
+        if (optR.isPresent()) {
+            Reimbursement r = optR.get();
+            r.setDeleted(true);
+            reimbursementRepository.save(r);
+            return true;
+        }
+        return false;
     }
 
     public List<Reimbursement> getReimbursementsFilter(String username, boolean filterPending){
@@ -52,8 +88,8 @@ public class ReimbursementService {
         }
     }
 
-    private List<Reimbursement> getReimbursementsByStatus(boolean filterPending){
-        if (filterPending) {
+    private List<Reimbursement> getReimbursementsByStatus(boolean pendingFilter){
+        if (pendingFilter) {
             return reimbursementRepository.findByStatusAndDeletedFalse(ReimbursementStatus.PENDING);
         }else{
             return reimbursementRepository.findByDeletedFalse();

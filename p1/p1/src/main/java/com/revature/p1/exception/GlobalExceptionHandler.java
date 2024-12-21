@@ -35,7 +35,11 @@ public class GlobalExceptionHandler {
     public @ResponseBody  ErrorResponse handleUnauthorized(Exception ex) {
         return new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
     }
-
+    @ExceptionHandler(value = {ForbiddenException.class, DuplicatedException.class})
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public @ResponseBody  ErrorResponse handleForbidden(Exception ex) {
+        return new ErrorResponse(HttpStatus.FORBIDDEN.value(), ex.getMessage());
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {

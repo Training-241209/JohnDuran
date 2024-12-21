@@ -24,13 +24,13 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping(value = "/signup")
-    public ResponseEntity<UserDto> signUp(@Valid @RequestBody SignUpRequest user)  throws Exception{
+    public ResponseEntity<UserDto> signUp(@Valid @RequestBody SignUpRequest user){
          
         return ResponseEntity.ok(new UserDto(userService.registerUser(user)));       
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<JwtAuthResponse> login(@Valid @RequestBody LoginRequest user) throws Exception {
+    public ResponseEntity<JwtAuthResponse> login(@Valid @RequestBody LoginRequest user)  {
          
         String token = authService.login(user);
 

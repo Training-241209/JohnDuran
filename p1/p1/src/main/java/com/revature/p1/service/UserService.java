@@ -8,6 +8,7 @@ import com.revature.p1.dto.request.SignUpRequest;
 import com.revature.p1.entity.Reimbursement;
 import com.revature.p1.entity.Role;
 import com.revature.p1.entity.User;
+import com.revature.p1.exception.custom.DuplicatedException;
 import com.revature.p1.exception.custom.InvalidUserException;
 import com.revature.p1.exception.custom.UserAlreadyExistsException;
 import com.revature.p1.repository.ReimbursementRepository;
@@ -90,7 +91,7 @@ public class UserService  implements UserDetailsService {
         if (optUser.isPresent()) {
              user = optUser.get();
         }else{
-            throw new NoSuchElementException("User with username:\""+username+"\" doesn't exists.");
+            throw new NoSuchElementException("User with username:"+username+" doesn't exists.");
         }
         return user.getRoles().stream().map((role) -> role.getName()).collect(Collectors.toList());
     }
@@ -100,9 +101,27 @@ public class UserService  implements UserDetailsService {
        if (optUser.isPresent()) {
             return optUser.get();
        }
-       throw new NoSuchElementException("User with username:\""+username+"\" doesn't exists.");
+       throw new NoSuchElementException("User with username:"+username+" doesn't exists.");
     }
-
+    @Transactional
+    public User grantRoleToUser(long userId, String roleName){
+        Optional<User> optUser =userRepository.findByIdAndDeletedFalse(userId);
+        if (optUser.isPresent()) {
+            User user = optUser.get();
+            Optional<Role> optRole = roleRepository.findByName(roleName);
+            if (optRole.isPresent()) {
+                Role role = optRole.get();
+                if ( user.getRoles().contains(role)) {
+                    throw new DuplicatedException("User already has the role with name:"+roleName);
+                }
+                user.getRoles().add(role);
+                return userRepository.save(user);
+            }else{
+                throw new NoSuchElementException("Role with name:"+roleName+" doesn't exists.");
+            }
+        }
+        throw new NoSuchElementException("User with id:"+userId+" doesn't exists.");
+    }
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
 

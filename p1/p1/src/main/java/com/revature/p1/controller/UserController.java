@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.revature.p1.dto.response.UserDto;
@@ -29,6 +30,11 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers().stream().map(u -> new UserDto(u)).collect(Collectors.toList()));
     }
 
+    @PatchMapping("/{userId}/role/MANAGER")
+    public ResponseEntity<UserDto> grantManagerRoleToUser(@PathVariable long userId) {
+        return ResponseEntity.ok(new UserDto(userService.grantRoleToUser(userId, "MANAGER")));
+    }
+
     @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable long  userId) {
         if (userService.softDeleteUser(userId)) {
@@ -38,9 +44,4 @@ public class UserController {
         }
 
     }
-
-
-    
-
-
 }
